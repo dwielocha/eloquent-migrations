@@ -12,7 +12,7 @@ class TestMigration extends Migration
      */
     public function up()
     {
-        echo "Test migration says: UP UP UP!\n";
+        // do nothing
     }
 
     /**
@@ -20,6 +20,6 @@ class TestMigration extends Migration
      */
     public function down()
     {
-        echo "Test migration says: DOWN DOWN DOWN!\n";
+        // do nothing
     }
 }

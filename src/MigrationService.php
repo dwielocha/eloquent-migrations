@@ -2,8 +2,8 @@
 namespace Dwielocha\EloquentMigrations;
 
 use Dwielocha\EloquentMigrations\Exceptions\EmptyMigrationsPathException;
+use Dwielocha\EloquentMigrations\Exceptions\MigrationClassNotUniqueException;
 use Illuminate\Database\Capsule\Manager as DB;
-
 
 /**
  * Migration service
@@ -34,9 +34,17 @@ class MigrationService
 
     /**
      * Array of installed migrations
+     * 
      * @var array
      */
     protected $installedMigrations = [];
+
+    /**
+     * Array of unique migration class names
+     * 
+     * @var array
+     */
+    protected $uniqueMigrationClasses = [];
 
     /**
      * Constructor
@@ -101,6 +109,7 @@ class MigrationService
      * Install new migrations
      * 
      * @return array array('errors' => [], 'installed' => [])
+     * @throws MigrationClassNotUniqueException
      */
     public function installNewMigrations()
     {
@@ -116,12 +125,18 @@ class MigrationService
 
         foreach ($files as $file) {
             $filename = basename($file, '.php');
+            list(, $class) = explode('__', $filename);
 
+            // Skip already installed migrations
             if (in_array($filename, $this->installedMigrations)) {
                 continue;
             }
 
-            list(, $class) = explode('__', $filename);
+            // Make sure that migration class is unique
+            if (!$this->isMigrationClassUnique($class)) {
+                throw new MigrationClassNotUniqueException($class, $filename);
+            }
+
             require_once $file;
 
             $db->beginTransaction();
@@ -200,5 +215,22 @@ class MigrationService
         asort($files);
 
         return $files;
+    }
+
+    /**
+     * Check if migration class is unique
+     * 
+     * @param string $class
+     * @return bool
+     */
+    protected function isMigrationClassUnique($class)
+    {
+        if (in_array($class, $this->uniqueMigrationClasses)) {
+            return false;
+        }
+
+        $this->uniqueMigrationClasses[] = $class;
+
+        return true;
     }
 }

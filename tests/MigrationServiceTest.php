@@ -1,6 +1,7 @@
 <?php 
 use Dwielocha\EloquentMigrations\MigrationService;
 use Dwielocha\EloquentMigrations\Exceptions\EmptyMigrationsPathException;
+use Dwielocha\EloquentMigrations\Exceptions\MigrationClassNotUniqueException;
 use Illuminate\Database\Capsule\Manager as DB;
 use PHPUnit\Framework\TestCase;
 
@@ -51,7 +52,6 @@ class MigrationServiceTest extends TestCase
             $service->installNewMigrations();
             $this->assertTrue(false);
         } catch (EmptyMigrationsPathException $ex) {
-            echo $ex->getMessage();
             $this->assertTrue(true);
         }
     }
@@ -68,10 +68,25 @@ class MigrationServiceTest extends TestCase
         // We are checking result structure too
         $this->assertTrue(isset($result['installed']));
         $this->assertTrue(isset($result['errors']));
+        $this->assertTrue(count($result['installed']) == 1);
         $this->assertTrue(count($result['errors']) == 0);
     }
 
-    // @TODO check if installed migration is not launched again
+    /**
+     * Check if service triggers exception on duplicated migration classes
+     */
+    public function testDuplicatedMigrationClassError()
+    {
+        try {
+            $service = new MigrationService('src/*TestMigration.php');
+            $service->createMigrationsTable();
+            $service->installNewMigrations();
+            $this->assertTrue(false);
+        } catch (MigrationClassNotUniqueException $ex) {
+            $this->assertTrue(true);
+        }
+    }
+
 
     /**
      * Clear DB before running the test

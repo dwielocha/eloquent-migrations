@@ -50,16 +50,20 @@ class MigrateCommand extends Command
                 ['Installed migrations'], 
                 $result['installed']
             );
-        } else {
-            $io->text('Nothing new to install.');
+        } 
+        if (count($result['errors'])) {
+            $io->error('There were some errors while installing new migrations:');
+            $i = 1;
+            foreach ($result['errors'] as $error) {
+                $io->text("{$i}. Error in {$error['file']}");
+                $io->text("{$error['message']}");
+                $io->text('');
+                $i++;
+            }
         }
 
-        if (count($result['errors'])) {
-            $io->error('There were some errors while installing new migrations.');
-            $io->table(
-                ['Errors'],
-                $result['errors']
-            );
+        if (empty($result['installed']) && empty($result['errors'])) {
+            $io->text('Nothing new to install.');
         }
 
         // Empty line for better readability

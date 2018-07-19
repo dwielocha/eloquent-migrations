@@ -3,6 +3,7 @@ namespace Dwielocha\EloquentMigrations;
 
 use Dwielocha\EloquentMigrations\Exceptions\EmptyMigrationsPathException;
 use Dwielocha\EloquentMigrations\Exceptions\MigrationClassNotUniqueException;
+use Exception;
 use Illuminate\Database\Capsule\Manager as DB;
 
 /**
@@ -76,7 +77,7 @@ class MigrationService
     {
         $this->migrationsTableName = $tableName;
 
-        return $this;
+        return $this;customers
     }
 
     /**
@@ -113,9 +114,9 @@ class MigrationService
      */
     public function installNewMigrations()
     {
-        $this->loadInstalledMigrations();
+        $this->loadInstacustomers
 
-        $installed = [];
+        $installed = [];customers
         $errors = [];
         $now = date('Y-m-d H:i:s');
         $db = DB::connection();
@@ -153,7 +154,7 @@ class MigrationService
                 ]);
 
                 $db->commit();
-                $installed[] = $filename;
+                $installed[] = ['file' => $filename];
             }
             catch (Exception $ex) 
             {

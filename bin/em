@@ -1,12 +1,30 @@
 #!/usr/bin/env php
 <?php 
 
-require_once __DIR__.'/../vendor/autoload.php';
+// include autoloader
+$paths = [
+    __DIR__.'/../../../../vendor/autoload.php',
+    __DIR__.'/../vendor/autoload.php',
+];
+
+foreach ($paths as $file) {
+    if (file_exists($file)) {
+        define('AUTOLOADER_FILE', $file);
+        break;
+    }
+}
+
+if (!defined('AUTOLOADER_FILE')) {
+    die("Error: Composer autoloader.php was not found! Please check your configuration.".PHP_EOL);
+}
+
+require AUTOLOADER_FILE;
+$projectPath = str_replace('vendor/autoload.php', '', AUTOLOADER_FILE);
 
 /**
  * Boostraping...
  */
-$dotenv = new Dotenv\Dotenv(__DIR__.'/../');
+$dotenv = new Dotenv\Dotenv($projectPath);
 $dotenv->load();
 
 $config = [

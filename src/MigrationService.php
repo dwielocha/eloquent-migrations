@@ -77,7 +77,7 @@ class MigrationService
     {
         $this->migrationsTableName = $tableName;
 
-        return $this;customers
+        return $this;
     }
 
     /**
@@ -114,9 +114,9 @@ class MigrationService
      */
     public function installNewMigrations()
     {
-        $this->loadInstacustomers
+        $this->loadInstalledMigrations();
 
-        $installed = [];customers
+        $installed = [];
         $errors = [];
         $now = date('Y-m-d H:i:s');
         $db = DB::connection();

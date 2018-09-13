@@ -3,14 +3,14 @@ namespace Dwielocha\EloquentMigrations\Exceptions;
 
 /**
  * Exception: migration class is not unique
- * 
+ *
  * @author Damian Wielocha <damian@wielocha.com>
  */
 class MigrationClassNotUniqueException extends \Exception
 {
     /**
      * Constructor
-     * 
+     *
      * @param string $class
      * @param string $filename
      */

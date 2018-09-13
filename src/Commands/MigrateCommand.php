@@ -10,14 +10,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * CLI: migrate command
- * 
+ *
  * @author Damian Wielocha <damian@wielocha.com>
  */
 class MigrateCommand extends Command
 {
     /**
      * Command configuration
-     * 
+     *
      * @return void
      */
     protected function configure()
@@ -29,7 +29,7 @@ class MigrateCommand extends Command
 
     /**
      * Execute command
-     * 
+     *
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return void
@@ -47,10 +47,10 @@ class MigrateCommand extends Command
 
         if (count($result['installed'])) {
             $io->table(
-                ['Installed migrations'], 
+                ['Installed migrations'],
                 $result['installed']
             );
-        } 
+        }
         if (count($result['errors'])) {
             $io->error('There were some errors while installing new migrations:');
             $i = 1;

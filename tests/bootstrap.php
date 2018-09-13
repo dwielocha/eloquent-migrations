@@ -1,7 +1,7 @@
 <?php
 /**
  * Boostrap file for testing
- * 
+ *
  * @author Damian Wielocha <damian@wielocha.com>
  */
 require_once 'vendor/autoload.php';

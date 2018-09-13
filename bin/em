@@ -1,10 +1,10 @@
 #!/usr/bin/env php
-<?php 
+<?php
 
 // include autoloader
 $paths = [
-    __DIR__.'/../../../../vendor/autoload.php',
-    __DIR__.'/../vendor/autoload.php',
+    __DIR__ . '/../../../../vendor/autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
 ];
 
 foreach ($paths as $file) {
@@ -15,7 +15,7 @@ foreach ($paths as $file) {
 }
 
 if (!defined('AUTOLOADER_FILE')) {
-    die("Error: Composer autoloader.php was not found! Please check your configuration.".PHP_EOL);
+    die("Error: Composer autoloader.php was not found! Please check your configuration." . PHP_EOL);
 }
 
 require AUTOLOADER_FILE;
@@ -47,4 +47,3 @@ $capsule->bootEloquent();
 $app = new Symfony\Component\Console\Application;
 $app->add(new Dwielocha\EloquentMigrations\Commands\MigrateCommand());
 $app->run();
-

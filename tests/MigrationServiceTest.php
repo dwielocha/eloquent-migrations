@@ -1,4 +1,4 @@
-<?php 
+<?php
 use Dwielocha\EloquentMigrations\MigrationService;
 use Dwielocha\EloquentMigrations\Exceptions\EmptyMigrationsPathException;
 use Dwielocha\EloquentMigrations\Exceptions\MigrationClassNotUniqueException;
@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Migration service test
- * 
+ *
  * @author Damian Wielocha <damian@wielocha.com>
  */
 class MigrationServiceTest extends TestCase
@@ -34,7 +34,7 @@ class MigrationServiceTest extends TestCase
     {
         $service = new MigrationService(getenv('ELOQUENT_MIGRATIONS_PATH'));
         $currentTableName = $service->getMigrationsTableName();
-        $newTableName = 'new_migrations_'.date('YmdHis');
+        $newTableName = 'new_migrations_' . date('YmdHis');
 
         $service->setMigrationsTableName($newTableName);
         $this->assertEquals($newTableName, $service->getMigrationsTableName());
@@ -93,7 +93,7 @@ class MigrationServiceTest extends TestCase
      * @TODO this should be done by importing .sql file
      */
     protected function setUp()
-    {   
+    {
         $schema = DB::schema();
         $service = new MigrationService(getenv('ELOQUENT_MIGRATIONS_PATH'));
 

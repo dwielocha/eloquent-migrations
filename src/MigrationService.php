@@ -8,7 +8,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 /**
  * Migration service
- * 
+ *
  * @author Damian Wielocha <damian@wielocha.com>
  */
 class MigrationService
@@ -21,35 +21,35 @@ class MigrationService
 
     /**
      * Name of table in DB where is stored list of installed migrations
-     * 
+     *
      * @var string
      */
     protected $migrationsTableName = 'migrations';
 
     /**
      * Path for migration files
-     * 
+     *
      * @var string
      */
     protected $migrationsPath = '';
 
     /**
      * Array of installed migrations
-     * 
+     *
      * @var array
      */
     protected $installedMigrations = [];
 
     /**
      * Array of unique migration class names
-     * 
+     *
      * @var array
      */
     protected $uniqueMigrationClasses = [];
 
     /**
      * Constructor
-     * 
+     *
      * @param string $migrationsPath
      */
     public function __construct($migrationsPath)
@@ -59,7 +59,7 @@ class MigrationService
 
     /**
      * Return name of migrations table
-     * 
+     *
      * @return string
      */
     public function getMigrationsTableName()
@@ -69,7 +69,7 @@ class MigrationService
 
     /**
      * Change migrations table name
-     * 
+     *
      * @param string $tableName
      * @return $this
      */
@@ -83,7 +83,7 @@ class MigrationService
     /**
      * Create migrations table in DB
      * Function returns true if table was created, false if it already exists
-     * 
+     *
      * @return bool
      */
     public function createMigrationsTable()
@@ -95,7 +95,7 @@ class MigrationService
         }
 
         $schema->create(
-            $this->migrationsTableName, 
+            $this->migrationsTableName,
             function ($table) {
                 $table->string('migration', 255);
                 $table->integer('batch')->unsigned();
@@ -108,7 +108,7 @@ class MigrationService
 
     /**
      * Install new migrations
-     * 
+     *
      * @return array array('errors' => [], 'installed' => [])
      * @throws MigrationClassNotUniqueException
      */
@@ -156,7 +156,7 @@ class MigrationService
                 $db->commit();
                 $installed[] = ['file' => $filename];
             }
-            catch (Exception $ex) 
+            catch (Exception $ex)
             {
                 $db->rollBack();
                 $errors[] = [
@@ -201,7 +201,7 @@ class MigrationService
 
     /**
      * Return migration files
-     * 
+     *
      * @param string $path
      * @return array
      * @throws EmptyMigrationsPathException
@@ -220,7 +220,7 @@ class MigrationService
 
     /**
      * Check if migration class is unique
-     * 
+     *
      * @param string $class
      * @return bool
      */

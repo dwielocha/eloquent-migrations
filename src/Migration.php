@@ -27,7 +27,7 @@ abstract class Migration
      * Commit migration
      */
     abstract public function up();
-    
+
     /**
      * Rollback migration
      */
